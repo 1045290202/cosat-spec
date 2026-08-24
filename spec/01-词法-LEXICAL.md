@@ -1,6 +1,6 @@
 # Cosat 词法
 
-**版本**：Cosat v0.1 ｜ **日期**：2026-08-22
+**版本**：Cosat v0.1 ｜ **日期**：2026-08-24
 **相关**：[02-符号](./02-符号-SYMBOLS.md) ｜ [03-运算符](./03-运算符-OPERATORS.md) ｜ [12-文法](./12-文法-GRAMMAR.md) ｜ 动机见 [design/01](../design/01-词法与符号.md)
 
 ---
@@ -12,7 +12,7 @@
 comment-line  = "#" , { character - newline } ;
 comment-block = "#$" , { character } , "$#" ;
 number        = digit , { digit } , [ "." , digit , { digit } ] ;   (* 含 `-3.14` 形态 *)
-string        = '"' , { character } , '"' ;                          (* 无转义 ⏳ *)
+string        = '"' , { character } , '"' ;
 boolean       = "true" | "false" ;
 identifier    = ( letter | "_" | "$" ) , { letter | digit | "_" | "$" } ;
 keyword       = "def" | "when" | "match" | "each" | "while" ;
@@ -39,9 +39,3 @@ placeholder   = "_" ;
 结构开启符 `\` 之后必须跟空格（`\ arg => …`；紧贴形式 `\x` 编译错）。例外：`@` 保持紧贴——`@\ arg => …` 是复合前缀，`\` 后仍须空格。关键词构造 `when` `match` `each` `while` 以 token 边界自分隔，无空格规则。理由见 [design/01](../design/01-词法与符号.md)。
 
 **实现注记**：空格规则落地以 Token 记录空白或 span 为前置（[07-循环 §7.3.7](./07-循环-LOOP.md)、[11-路线图](./11-路线图-ROADMAP.md)）。
-
-## 已知问题
-
-- **贪婪吞并无回退** ⏳：运算符与 `;` 相邻会合并报错（`->;` → `Unknown symbol '->;'`），运算符后必须写空格；改进方向：最长匹配 + 回退；
-- **字符串无转义** ⏳（实现时 `\n` `\"` 等在字符串扫描内部消化）；
-- **错误信息无行列号** ⏳（Token 增加 span）。
