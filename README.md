@@ -41,7 +41,7 @@ each nums { _ > 0 : @print }
 
 ```
 cosat-spec/
-├── spec/        # 规范文档（00–12）：规则 + 文法
+├── spec/        # 规范文档（00–12）：规则；形式文法统一在 12
 ├── design/      # 设计动机与理由（与章节对应）
 └── README.md
 ```
@@ -62,7 +62,7 @@ cosat-spec/
 | [09-速查](./spec/09-速查-CHEATSHEET.md) | 判定规则速查表 |
 | [10-废案](./spec/10-废案-REJECTED.md) | 否决方案及原因、形态取代记录 |
 | [11-路线图](./spec/11-路线图-ROADMAP.md) | 远期路线与实现顺序 |
-| [12-文法](./spec/12-文法-GRAMMAR.md) | EBNF 全量文法汇总 |
+| [12-文法](./spec/12-文法-GRAMMAR.md) | EBNF 全量文法汇总（全仓唯一事实源） |
 
 设计动机、理由与否决论证存放于 [design/](./design/README.md)。
 

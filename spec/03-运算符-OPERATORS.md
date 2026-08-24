@@ -1,29 +1,13 @@
 # Cosat 运算符与优先级
 
-**版本**：Cosat v0.1 ｜ **日期**：2026-08-22
+**版本**：Cosat v0.1 ｜ **日期**：2026-08-24
 **相关**：[01-词法](./01-词法-LEXICAL.md) ｜ [05-函数](./05-函数-FUNCTIONS.md) ｜ [12-文法](./12-文法-GRAMMAR.md) ｜ 动机见 [design/03](../design/03-运算符.md)、[design/09](../design/09-链上定义.md)
 
 ---
 
-## 文法（EBNF）
+## 文法
 
-```ebnf
-(* 表达式；结合性未规定 ⏳，暂按左结合实现 *)
-expr         = equality ;
-equality     = comparison , [ "==" , comparison ] ;          (* 优先级 1 *)
-comparison   = additive , [ ( "<" | ">" ) , additive ] ;     (* 优先级 2 *)
-additive     = term , { ( "+" | "-" ) , term } ;             (* 优先级 3 *)
-term         = unary , { ( "*" | "/" ) , unary } ;           (* 优先级 4 *)
-unary        = ( "+" | "-" | "!" ) , unary                   (* 单目，高于一切二元 *)
-             | at-expr
-             | primary ;
-at-expr      = "@" , callee ;                                (* 前缀，与单目同级 *)
-callee       = dotted-name | at-expr | lambda-inline ;       (* 右结合：@@fn = @(@fn) *)
-dotted-name  = identifier , { "." , identifier } ;
-lambda-inline= "\" , params , "=>" , body ;                  (* @ 紧贴 \ *)
-primary      = number | string | boolean | identifier | "_" | "(" , chain , ")"
-             | lambda | match-expr | when-expr | each-expr | while-expr ;  (* 后四者限值位开头 *)
-```
+形式文法见 [12-文法 §12.3](./12-文法-GRAMMAR.md)。
 
 存储不是运算符：定义走链站点 `-> def 名字`（[04-链模型](./04-链模型-CHAIN.md)、[design/09](../design/09-链上定义.md)）。结构性前缀 `\` 与 `=>` 不入优先级表；关键词构造 `when` `match` `each` `while` 同为结构开启符，亦不入优先级表——它们的作用域由扫描边界规则界定（见下）。
 

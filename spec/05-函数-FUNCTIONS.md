@@ -1,20 +1,13 @@
 # Cosat 函数
 
-**版本**：Cosat v0.1 ｜ **日期**：2026-08-22
+**版本**：Cosat v0.1 ｜ **日期**：2026-08-24
 **状态**：🔒 设计定案 ｜ **相关**：[04-链模型](./04-链模型-CHAIN.md) ｜ [06-匹配](./06-匹配-MATCH.md) ｜ [07-循环](./07-循环-LOOP.md) ｜ [12-文法](./12-文法-GRAMMAR.md) ｜ 动机见 [design/05](../design/05-函数.md)、[design/09](../design/09-链上定义.md)
 
 ---
 
-## 文法（EBNF）
+## 文法
 
-```ebnf
-lambda       = "\" , params , "=>" , body ;
-params       = { param } ;                                (* 可空：\ => 42 *)
-param        = identifier | "_" ;
-body         = operand | block ;
-block        = "{" , { statement } , [ tail-operand ] , "}" ;
-tail-operand = operand ;                                 (* 无分号 = 块值出口 *)
-```
+形式文法见 [12-文法 §12.5、§12.2](./12-文法-GRAMMAR.md)。
 
 定义不是独立文法：**定义 = lambda 链首 + `-> def 名字` 段**（[04-链模型 def 定义站点](./04-链模型-CHAIN.md)）。
 

@@ -5,21 +5,9 @@
 
 ---
 
-## 文法（EBNF）
+## 文法
 
-```ebnf
-(* 词法元素 *)
-comment-line  = "#" , { character - newline } ;
-comment-block = "#$" , { character } , "$#" ;
-number        = digit , { digit } , [ "." , digit , { digit } ] ;   (* 含 `-3.14` 形态 *)
-string        = '"' , { character } , '"' ;
-boolean       = "true" | "false" ;
-identifier    = ( letter | "_" | "$" ) , { letter | digit | "_" | "$" } ;
-keyword       = "def" | "when" | "match" | "each" | "while" ;
-operator      = "->" | "=>" | "==" | "<" | ">" | "*" | "/" | "+" | "-" | "!" | "@" | ":" | ";" | "," | "." ;
-delimiter     = "{" | "}" | "(" | ")" ;
-placeholder   = "_" ;
-```
+形式文法见 [12-文法 §12.1](./12-文法-GRAMMAR.md)。
 
 ## 规则
 

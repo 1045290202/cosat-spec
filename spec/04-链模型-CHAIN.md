@@ -1,28 +1,13 @@
 # Cosat 链（管道）模型
 
-**版本**：Cosat v0.1 ｜ **日期**：2026-08-22
+**版本**：Cosat v0.1 ｜ **日期**：2026-08-24
 **状态**：🔒 设计定案 ｜ **相关**：[05-函数](./05-函数-FUNCTIONS.md) ｜ [06-匹配](./06-匹配-MATCH.md) ｜ [07-循环](./07-循环-LOOP.md) ｜ [12-文法](./12-文法-GRAMMAR.md) ｜ 动机见 [design/04](../design/04-链与下划线.md)
 
 ---
 
-## 文法（EBNF）
+## 文法
 
-```ebnf
-chain       = [ value ] , { segment } ;
-value       = operand | param-group ;
-param-group = operand , { "," , operand } ;
-segment     = "->" , station
-            | "->" , recv-group , "->" , station ;      (* 合并段 *)
-recv-group  = recv-item , { "," , recv-item } ;
-recv-item   = at-expr | def-binding | "_"
-            | operand ;                                 (* 点位计数：@fn=N、def=1、裸_=1、其余=0 *)
-station     = at-expr                                   (* 含 @(\ …) 内联 lambda *)
-            | "(" , "@@" , operand , ")"                (* 动态站点 *)
-            | def-binding                               (* 定义站点：绑定并透传 *)
-            | "match" , "_" , branch-block              (* match 段 *)
-            | "each" , "_" , block ;                    (* 循环站点段，源仅限单独 _ *)
-def-binding = "def" , identifier ;                      (* 恰好 1 个接收点 *)
-```
+形式文法见 [12-文法 §12.4](./12-文法-GRAMMAR.md)。
 
 ## §5 链 = 值 段*
 

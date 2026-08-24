@@ -3,7 +3,7 @@
 **版本**：Cosat v0.1 ｜ **日期**：2026-08-24
 **状态**：🔒 设计定案（标注 ⏳ / ❓ 处除外）｜ **相关**：各章规范 ｜ 动机见 [design/](../design/README.md)
 
-本文档为全量文法速览，按章组织；语义约束（点位校验、穷尽性、禁写清单）以各章规范为准。
+本档为全仓形式文法（EBNF）的唯一事实源，按章组织，各章以链接引用；语义约束（点位校验、穷尽性、禁写清单）以各章规范为准。
 
 ---
 
@@ -12,7 +12,7 @@
 ```ebnf
 comment-line  = "#" , { character - newline } ;
 comment-block = "#$" , { character } , "$#" ;
-number        = digit , { digit } , [ "." , digit , { digit } ] ;
+number        = digit , { digit } , [ "." , digit , { digit } ] ;   (* 含 `-3.14` 形态 *)
 string        = '"' , { character } , '"' ;
 boolean       = "true" | "false" ;
 identifier    = ( letter | "_" | "$" ) , { letter | digit | "_" | "$" } ;
@@ -42,14 +42,14 @@ statement    = chain , ";"
              | while-expr , ";"
              | operand , ";" ;
 block        = "{" , { statement } , [ tail-operand ] , "}" ;
-tail-operand = operand ;
+tail-operand = operand ;                             (* 无分号 = 块值出口；带分号 → 块值为空值 *)
 ```
 
 定义不是独立语句：lambda 链首 + `-> def 名字` 段即定义（§12.4）。
 
 ## §12.3 表达式与运算符（[03](./03-运算符-OPERATORS.md)）
 
-优先级：`* /` ＞ `+ -` ＞ `< >` ＞ `==` ＞ [`?:` 三元 ⏳（待定；若定案则最低）]；单目与前缀 `@` 高于一切二元。结合性未规定 ⏳。存储不是运算符。
+优先级：`* /` ＞ `+ -` ＞ `< >` ＞ `==` ＞ [`?:` 三元 ⏳（待定；若定案则最低）]；单目与前缀 `@` 高于一切二元。结合性未规定 ⏳，暂按左结合实现。存储不是运算符。
 
 ```ebnf
 expr         = equality ;
@@ -92,7 +92,7 @@ def-binding  = "def" , identifier ;                        (* tee：绑定并透
 
 ```ebnf
 lambda       = "\" , params , "=>" , body ;
-params       = { param } ;
+params       = { param } ;                                (* 可空：\ => 42 *)
 param        = identifier | "_" ;
 body         = operand | block ;
 ```
@@ -108,6 +108,7 @@ scrutinee    = operand-banned ;
 branch-block = "{" , branch , { branch } , "}" ;
 branch       = branch-left , ":" , receiver ;
 branch-left  = "_" | guard-operand | literal ;
+guard-operand = operand-with-"_" ;                    (* match 守卫须含 _ *)
 receiver     = operand | block ;
 ```
 
@@ -123,6 +124,7 @@ while-expr   = "while" , guard-block ;            (* 条件循环，仅语句位
 source       = operand-banned ;
 guard-block  = "{" , guard-branch , { guard-branch } , "}" ;
 guard-branch = guard , ":" , receiver ;
+receiver     = operand | block ;                  (* each 供 1 值；while 供 0 值 *)
 guard        = "_" | operand-with-"_" ;
 ```
 

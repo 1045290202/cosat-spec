@@ -1,22 +1,13 @@
 # Cosat 判断 · match 与 when（多路分发）
 
-**版本**：Cosat v0.1 ｜ **日期**：2026-08-22
+**版本**：Cosat v0.1 ｜ **日期**：2026-08-24
 **状态**：🔒 设计定案 ｜ **相关**：[04-链模型](./04-链模型-CHAIN.md) ｜ [05-函数](./05-函数-FUNCTIONS.md) ｜ [07-循环](./07-循环-LOOP.md) ｜ [12-文法](./12-文法-GRAMMAR.md) ｜ 动机见 [design/06](../design/06-匹配.md)
 
 ---
 
-## 文法（EBNF）
+## 文法
 
-```ebnf
-match-expr   = "match" , scrutinee , branch-block ;       (* 值分发：必有被匹配值 *)
-when-expr    = "when" , branch-block ;                    (* 条件分发：无被匹配值 *)
-scrutinee    = operand-banned ;                           (* 扫描到 { 止；内禁 -> ; , : *)
-branch-block = "{" , branch , { branch } , "}" ;
-branch       = branch-left , ":" , receiver ;
-branch-left  = "_" | guard-operand | literal ;
-guard-operand = operand ;                                 (* match 守卫须含 _；when 守卫禁 _；扫描到 : 止 *)
-receiver     = operand | block ;                          (* 接收者，按接收点位计数 *)
-```
+形式文法见 [12-文法 §12.6](./12-文法-GRAMMAR.md)。
 
 ## §7.1 match 与 when
 

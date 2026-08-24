@@ -1,24 +1,13 @@
 # Cosat 语句与程序结构
 
-**版本**：Cosat v0.1 ｜ **日期**：2026-08-22
+**版本**：Cosat v0.1 ｜ **日期**：2026-08-24
 **相关**：[05-函数](./05-函数-FUNCTIONS.md) ｜ [06-匹配](./06-匹配-MATCH.md) ｜ [07-循环](./07-循环-LOOP.md) ｜ [12-文法](./12-文法-GRAMMAR.md) ｜ 动机见 [design/08](../design/08-语句.md)
 
 ---
 
-## 文法（EBNF）
+## 文法
 
-```ebnf
-program     = { statement } ;
-statement   = chain , ";"
-            | definition , ";"
-            | match-expr , ";"          (* match / when：语句位可省 _ 穷尽 *)
-            | when-expr , ";"
-            | each-expr , ";"
-            | while-expr , ";"
-            | operand , ";" ;
-block       = "{" , { statement } , [ tail-operand ] , "}" ;
-tail-operand = operand ;              (* 无分号 = 块值出口；带分号 → 块值为空值 *)
-```
+形式文法见 [12-文法 §12.2](./12-文法-GRAMMAR.md)。
 
 ## 规则
 

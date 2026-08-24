@@ -1,23 +1,13 @@
 # Cosat 循环 · each 与 while
 
-**版本**：Cosat v0.1 ｜ **日期**：2026-08-22
+**版本**：Cosat v0.1 ｜ **日期**：2026-08-24
 **状态**：🔒 设计定案 ｜ **相关**：[04-链模型](./04-链模型-CHAIN.md) ｜ [06-匹配](./06-匹配-MATCH.md) ｜ [08-语句](./08-语句-STATEMENTS.md) ｜ [12-文法](./12-文法-GRAMMAR.md) ｜ 动机见 [design/07](../design/07-循环.md)
 
 ---
 
-## 文法（EBNF）
+## 文法
 
-```ebnf
-each-expr     = "each" , source , block                 (* 遍历型：each src { 体 } *)
-              | "each" , source , guard-block           (* 遍历带守卫型：each src { 守卫 : 体 … } *)
-              | "each" , "_" , block ;                  (* 站点源：仅 data -> each _ { 体 } *)
-while-expr    = "while" , guard-block ;                 (* 条件循环：while { 守卫 : 零参体 … } *)
-source        = operand-banned ;                        (* 扫描到 { 止；内禁 -> ; , : *)
-guard-block   = "{" , guard-branch , { guard-branch } , "}" ;
-guard-branch  = guard , ":" , receiver ;
-guard         = "_" | operand-with-"_" ;                (* 扫描到 : 止；each 守卫 _ = 当前元素；while 守卫禁 _，单独 _ 守卫 v1 编译错 *)
-receiver      = operand | block ;                       (* each 供 1 值；while 供 0 值 *)
-```
+形式文法见 [12-文法 §12.7](./12-文法-GRAMMAR.md)。
 
 遍历型与遍历带守卫型的区分：块内首个 `:` 是否在配对 `}` 之前（扫描判定）。
 
