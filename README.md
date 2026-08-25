@@ -41,7 +41,7 @@ each nums { _ > 0 : @print }
 
 ```
 cosat-spec/
-├── spec/        # 规范文档（00–15）：规则；形式文法统一在 12
+├── spec/        # 规范文档（00–12）：规则；形式文法统一在 10
 ├── design/      # 设计动机与理由（与章节对应）
 └── README.md
 ```
@@ -59,12 +59,12 @@ cosat-spec/
 | [06-匹配](./spec/06-匹配-MATCH.md) | match/when 双构造、分支体泛化、全变体清单、三元待定 |
 | [07-循环](./spec/07-循环-LOOP.md) | each/while 双构造（含遍历带守卫）、收集开关、循环与链 |
 | [08-语句](./spec/08-语句-STATEMENTS.md) | 语义分号、块值、出口纪律 |
-| [09-速查](./spec/09-速查-CHEATSHEET.md) | 判定规则速查表 |
-| [10-废案](./spec/10-废案-REJECTED.md) | 否决方案及原因、形态取代记录 |
+| [09-数据类型](./spec/09-数据类型-TYPES.md) | 值域清单、number/string/boolean 语义、相等与运算符分派原则 |
+| [10-文法](./spec/10-文法-GRAMMAR.md) | EBNF 全量文法汇总（全仓唯一事实源） |
 | [11-路线图](./spec/11-路线图-ROADMAP.md) | 远期路线与实现顺序 |
-| [12-文法](./spec/12-文法-GRAMMAR.md) | EBNF 全量文法汇总（全仓唯一事实源） |
-| [15-数据类型](./spec/15-数据类型-TYPES.md) | 值域清单、number/string/boolean 语义、相等与运算符分派原则 |
+| [12-速查](./spec/12-速查-CHEATSHEET.md) | 判定规则速查表 |
+| [rejected/](./rejected/README.md) | 否决方案及原因、形态取代记录 |
 
 设计动机、理由与否决论证存放于 [design/](./design/README.md)。
 
-**推荐阅读顺序**：00 → 02 → 04 → 05 → 06 → 07 → 08，随后 09 速查与 12 文法；需要追溯设计决策时查 design/ 与 10-废案。
+**推荐阅读顺序**：00 → 02 → 04 → 05 → 06 → 07 → 08，随后 12 速查与 10 文法；需要追溯设计决策时查 design/ 与 [rejected/](./rejected/README.md)。
